@@ -2,6 +2,8 @@
 A CalDAV &amp; CardDAV Web Client
 
 
+ORIGINAL: https://inf-it.com/open-source/clients/infcloud/
+
 Modifications:
 
 1. Enable cookie to save login credential.(Useful when installed as web app)

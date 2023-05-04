@@ -135,6 +135,8 @@ html .fc,
 .fc-widget-content {  /* <td>, usually */
 	border-top: 1px solid #c0c0c0;
 	border-right: 1px solid transparent;
+	border-bottom: 1px solid #c0c0c0;
+	border-left: 1px solid #c0c0c0;
 	}
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
 	background: #fafadd;
@@ -315,8 +317,7 @@ a.fc-event {
 	background-color: transparent !important; /* overit! ... priesvistnost all day veci */
 	}
 
-.fc-event-time,
-.fc-event-title {
+.fc-event-time,.fc-event-title {
 	padding: 0 1px;
 	}
 
@@ -552,9 +553,13 @@ table.fc-border-separate {
 /* event styles */
 
 .fc-grid .fc-event-time {
-	font-weight: 500;
+	float:right;
+	font-size:0.94em;
+	line-height:17px;
+	opacity:0.7;
+/*	font-weight: 500;
 	font-size: 0.94em;
-	line-height: 13px;	/* event height problem if time is shown */
+	line-height: 13px;*/	/* event height problem if time is shown */
 }
 
 /* right-to-left */

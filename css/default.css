@@ -2225,6 +2225,7 @@ body
 	display: none;
 	opacity: 0.95;
 	z-index: 101;
+	border-radius:10px;
 }
 
 #todoLoader .saveLoader
@@ -2236,6 +2237,7 @@ body
 	display: block;
 	opacity: 0.95;
 	z-index: 101;
+	border-radius:10px;
 }
 
 .saveLoaderInfo
@@ -2585,6 +2587,8 @@ h3
 	user-select: none;
 	-webkit-user-select:none;
 	-moz-user-select: -moz-none;
+	border-radius:10px;
+	overflow:hidden;
 }
 
 #repeatConfirmBox
@@ -2863,6 +2867,7 @@ h3
 	overflow-y: auto;
 	border: 1px solid #c0c0c0;
 	z-index: 100;
+	border-radius: 10px;
 }
 
 #todo_details_template
@@ -3585,6 +3590,8 @@ img[data-type="invalidVerySmall"]
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
+	border-radius:10px;
+	overflow:hidden;
 }
 
 #CalDavZAPPopupColor

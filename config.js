@@ -332,10 +332,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 // port, ... (client installed into Davical "htdocs" subdirectory;
 // works "out of the box", no additional setup required):
 var globalNetworkCheckSettings={
-	href: location.protocol+'//'+location.hostname+
-		(location.port ? ':'+location.port: '')+
-		location.pathname.replace(RegExp('/+[^/]+/*(index\.html)?$'),'')+
-		'/caldav.php/',
+//	href: location.protocol+'//'+location.hostname+
+//		(location.port ? ':'+location.port: '')+
+//		location.pathname.replace(RegExp('/+[^/]+/*(index\.html)?$'),'')+
+//		'/caldav.php/',
+	href: 'https://xxx.yourhost.xxx/',
 	timeOut: 90000,
 	lockTimeOut: 10000,
 	checkContentType: true,
@@ -416,7 +417,8 @@ var globalSyncResourcesInterval=120000;
 // If undefined or false, the synchronization button is disabled.
 // NOTE: enable this option only if you really know what are you doing!
 // Example:
-var globalEnableRefresh=false;
+//var globalEnableRefresh=false;
+var globalEnableRefresh=true;
 
 
 // globalEnableKbNavigation
@@ -471,7 +473,7 @@ var globalEnableKbNavigation=true;
 //   uk_UA (Українська [Ukrainian]; thanks Serge Yakimchuck)
 //   zh_CN (中国 [Chinese]; thanks Fandy)
 // Example:
-var globalInterfaceLanguage='en_US';
+var globalInterfaceLanguage='zh_CN';
 
 
 // globalInterfaceCustomLanguages
@@ -481,7 +483,7 @@ var globalInterfaceLanguage='en_US';
 // (see the option above)
 // Example:
 //   globalInterfaceCustomLanguages=['en_US', 'sk_SK'];
-var globalInterfaceCustomLanguages=[];
+var globalInterfaceCustomLanguages=['zh_CN','en_US'];
 
 
 // globalSortAlphabet
@@ -541,22 +543,22 @@ var globalNewVersionNotifyUsers=[];
 // globalDatepickerFirstDayOfWeek
 // Set the datepicker first day of the week: Sunday is 0, Monday is 1, etc.
 // Example:
-var globalDatepickerFirstDayOfWeek=1;
+var globalDatepickerFirstDayOfWeek=0;
 
 
 // globalHideInfoMessageAfter
 // How long are information messages (such as: success, error) displayed
 // (in miliseconds).
 // Example:
-var globalHideInfoMessageAfter=1800;
-
+//var globalHideInfoMessageAfter=1800;
+var globalHideInfoMessageAfter=400;
 
 // globalEditorFadeAnimation
 // Set the editor fade in/out animation duration when editing or saving data
 // (in miliseconds).
 // Example:
-var globalEditorFadeAnimation=666;
-
+//var globalEditorFadeAnimation=666;
+var globalEditorFadeAnimation=400;
 
 
 
@@ -573,6 +575,7 @@ var globalEditorFadeAnimation=666;
 var globalEventStartPastLimit=3;
 var globalEventStartFutureLimit=3;
 var globalTodoPastLimit=1;
+
 
 
 // globalLoadedCalendarCollections
@@ -660,8 +663,8 @@ var globalActiveTodoCollections=[];
 // - 'agendaDay'
 // NOTE: we use custom and enhanced version of fullcalendar!
 // Example:
-var globalActiveView='multiWeek';
-
+//var globalActiveView='multiWeek';
+var globalActiveView='month'
 
 // globalOpenFormMode
 // Open new event form on 'single' or 'double' click.
@@ -683,6 +686,7 @@ var globalOpenFormMode='double';
 // Example:
 var globalTodoListFilterSelected=['filterAction', 'filterProgress'];
 
+var globalTodoListShowAllCompleted=true;
 
 // globalCalendarStartOfBusiness, globalCalendarEndOfBusiness
 // These options set the start and end of business hours with 0.5 hour
@@ -698,8 +702,8 @@ var globalCalendarEndOfBusiness=17;
 // If undefined or null, globalCalendarEndOfBusiness value will be taken as
 // a default end time instead.
 // Example:
-var globalDefaultEventDuration=120;
-
+//var globalDefaultEventDuration=120;
+var globalDefaultEventDuration=60;
 
 // globalAMPMFormat
 // This option enables to use 12 hours format (AM/PM) for displaying time.
@@ -719,7 +723,6 @@ var globalDefaultEventDuration=120;
 // Example:
 //var globalTimeFormatBasic='';
 
-
 // globalTimeFormatAgenda
 // This option defines the time format information for events in day and
 // week views. If undefined or null then default value is used.
@@ -728,7 +731,6 @@ var globalDefaultEventDuration=120;
 // formating rules.
 // Example:
 //var globalTimeFormatAgenda='';
-
 
 // globalDisplayHiddenEvents
 // This option defined whether events from unechecked calendars are displayed
@@ -752,7 +754,7 @@ var globalTimeZoneSupport=true;
 // timezones (defined in timezones.js):
 // grep "'[^']\+': {" timezones.js | sed -Ee "s#(\s*'|':\s*\{)##g"
 // Example:
-var globalTimeZone='Europe/Berlin';
+var globalTimeZone='Asia/Shanghai';
 
 
 // globalTimeZonesEnabled

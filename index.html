@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" manifest="cache.manifest">
 <head>
-	<title>InfCloud</title>
+	<title>CalDAV&CardDAV Client</title>
+	<link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon" />
 	<meta http-equiv="cache-control" content="no-cache" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -72,6 +73,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div class="loader"></div>
 	</div>
 	<div id="LoginPage" style="opacity: 1; display:none">
+		<style onload="try_relogin();"></style>
 		<div class="window">
 			<div id="Login">
 				<form onsubmit="event.preventDefault(); login();">
@@ -239,6 +241,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 				<div id="eventColor"></div>
 				<div id="eventDetailsContainer">
 					<table id="eventDetailsTable">
+                                                <tr id="calendarLine" height="35px">
+                                                        <td class="label"><label data-type="event_calendar" for="event_calendar">calendar: </label></td>
+                                                        <td colspan="2" data-size="full">
+                                                                <select class="long R_calendar" name="calendar" id="event_calendar">
+                                                                        <option data-type="choose_calendar" value="choose">Select a calendar</option>
+                                                                </select>
+                                                        </td>
+                                                </tr>
 						<tr>
 							<th colspan="3" class="headerContainer">
 								<div class="formNav prev" title="show previous event" data-type="event_prev_nav"><img src="images/arrow_prev.svg" alt="previous"/></div>
@@ -557,14 +567,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 								</select>
 							</td>
 						</tr>
-						<tr id="calendarLine">
-							<td class="label"><label data-type="event_calendar" for="event_calendar">calendar: </label></td>
-							<td colspan="2" data-size="full">
-								<select class="long R_calendar" name="calendar" id="event_calendar">
-									<option data-type="choose_calendar" value="choose">Select a calendar</option>
-								</select>
-							</td>
-						</tr>
 						<tr data-id="1">
 							<td class="label"><label data-type="alert" for="alert">alert: </label></td>
 							<td colspan="2" data-size="full">
@@ -614,6 +616,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 								<textarea class="long" name="note" data-type="PH_note" placeholder="Note" id="note" rows="2" cols="20"></textarea>
 							</td>
 						</tr>
+
 						<tr>
 							<td colspan="3">
 								<input id="show" type="hidden" value=""/>
@@ -705,6 +708,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 				<div id="todo_details_template">
 					<div id="todoDetailsContainer">
 						<table id="todoDetailsTable">
+							<tr id="calendarLineTODO" height="35px">
+                                                                <td class="label"><label data-type="calendar_TODO" for="todo_calendar">calendar: </label></td>
+                                                                <td colspan="2" data-size="full">
+                                                                        <select class="long R_calendar" name="calendar" id="todo_calendar">
+                                                                                <option data-type="choose_calendar_TODO" value="choose">Select a calendar</option>
+                                                                        </select>
+                                                                </td>
+                                                        </tr>
+
 							<tr>
 								<th colspan="3" class="headerContainer">
 									<div class="formNav prev top" title="show previous todo" data-type="todo_prev_nav"><img src="images/arrow_prev.svg" alt="todo prev"/></div>
@@ -1040,14 +1052,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 										<option data-type="priority_TODO_low" value="9">low</option>
 										<option data-type="priority_TODO_medium" value="5">medium</option>
 										<option data-type="priority_TODO_high" value="1">high</option>
-									</select>
-								</td>
-							</tr>
-							<tr id="calendarLineTODO">
-								<td class="label"><label data-type="calendar_TODO" for="todo_calendar">calendar: </label></td>
-								<td colspan="2" data-size="full">
-									<select class="long R_calendar" name="calendar" id="todo_calendar">
-										<option data-type="choose_calendar_TODO" value="choose">Select a calendar</option>
 									</select>
 								</td>
 							</tr>

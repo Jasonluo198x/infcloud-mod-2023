@@ -45,6 +45,7 @@ var globalSettings={
 	loadedcalendarcollections: {value:  (typeof globalLoadedCalendarCollections!='undefined' && globalLoadedCalendarCollections!=null) ? globalLoadedCalendarCollections : new Array(), locked:false},
 	loadedtodocollections: {value:  (typeof globalLoadedTodoCollections!='undefined' && globalLoadedTodoCollections!=null) ? globalLoadedTodoCollections : new Array(), locked:false},
 	todolistfilterselected: {value:  (typeof globalTodoListFilterSelected!='undefined' && globalTodoListFilterSelected!=null && globalTodoListFilterSelected!='') ? globalTodoListFilterSelected : ['filterAction', 'filterProgress'], locked:false},
+	todolistshowallcompleted:{value:(typeof globalTodoListShowAllCompleted!='undefined' && globalTodoListShowAllCompleted!=null && globalTodoListShowAllCompleted!='')?globalTodoListShowAllCompleted:false,locked:false},
 	activeview: {value:  (typeof globalActiveView!='undefined' && globalActiveView!=null && globalActiveView!='') ? globalActiveView : 'multiWeek', locked:false},
 	islastactiveview: {value:  true, locked:false},
 	calendarselected: {value:  (typeof globalCalendarSelected!='undefined' && globalCalendarSelected!=null && globalCalendarSelected!='') ? globalCalendarSelected : '', locked:false},
@@ -116,6 +117,7 @@ function resetSettings()
 		loadedcalendarcollections: {value:  (typeof globalLoadedCalendarCollections!='undefined' && globalLoadedCalendarCollections!=null) ? globalLoadedCalendarCollections : new Array(), locked:false},
 		loadedtodocollections: {value:  (typeof globalLoadedTodoCollections!='undefined' && globalLoadedTodoCollections!=null) ? globalLoadedTodoCollections : new Array(), locked:false},
 		todolistfilterselected: {value:  (typeof globalTodoListFilterSelected!='undefined' && globalTodoListFilterSelected!=null && globalTodoListFilterSelected!='') ? globalTodoListFilterSelected : ['filterAction', 'filterProgress'], locked:false},
+		todolistshowallcompleted:{value:(typeof globalTodoListShowAllCompleted!='undefined' && globalTodoListShowAllCompleted!=null && globalTodoListShowAllCompleted!='')?globalTodoListShowAllCompleted:false,locked:false},
 		activeview: {value:  (typeof globalActiveView!='undefined' && globalActiveView!=null && globalActiveView!='') ? globalActiveView : 'multiWeek', locked:false},
 		islastactiveview: {value:  true, lockedlocked:false},
 		calendarselected: {value:  (typeof globalCalendarSelected!='undefined' && globalCalendarSelected!=null && globalCalendarSelected!='') ? globalCalendarSelected : '', locked:false},
@@ -575,6 +577,28 @@ function checkForApplication(inputApp)
 		$('#'+inputID).css('display','block').animate({opacity : 1}, 666, function(){globalEnableAppSwitch=true;});
 	else*/
 		$('#'+inputID).css('visibility','visible').animate({opacity : 1}, 666, function(){globalEnableAppSwitch=true;});
+	
+	switch(inputApp)
+	{
+		case 'CalDavZAP':
+			if ($('#ResourceCalDAVList').width() > 0) {
+				$('#ResourceCalDAVToggle').click();
+			}
+			break;
+		case 'CalDavTODO':
+			if ($('#ResourceCalDAVTODOList').width() > 0) {
+				$('#ResourceCalDAVTODOToggle').click();
+			}
+			break;
+		case 'CardDavMATE':
+			if ($('#ResourceCardDAVList').width() > 0) {
+				$('#ResourceCardDAVToggle').click();
+			}
+			break;
+		default:
+			break;
+	}
+
 }
 
 function getLoggedUser()
@@ -585,11 +609,56 @@ function getLoggedUser()
 	return globalAccountSettings[0];
 }
 
+function setCookie(name,value)
+{
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+function getCookie(name)
+{
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+ 
+    if(arr=document.cookie.match(reg))
+ 
+        return unescape(arr[2]);
+    else
+        return null;
+}
+function delCookie(name)
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null)
+        document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+function try_relogin()
+{
+	auth = getCookie("auth");
+	if (auth) 
+	{
+		auth_arr = auth.split(":");
+		$('#LoginLoader').fadeTo(400, 0.5, function(){
+			globalLoginUsername = auth_arr[0];
+			globalLoginPassword = auth_arr[1];
+			setCookie("auth",globalLoginUsername + ":" + globalLoginPassword);
+			loadConfig();
+			if ($("#ResourceCalDAVList").width() > 0) 
+			{
+				$('#ResourceCalDAVToggle').click();
+			}
+		});
+	}
+}
+
 function login()
 {
 	$('#LoginLoader').fadeTo(1200, 1, function(){
 		globalLoginUsername=$('#LoginPage').find('[data-type="system_username"]').val();
 		globalLoginPassword=$('#LoginPage').find('[data-type="system_password"]').val();
+		setCookie("auth",globalLoginUsername + ":" + globalLoginPassword);
 		loadConfig();
 	});
 }
@@ -607,6 +676,9 @@ function logout(forceLogout)
 		globalPreventLogoutSync=true;
 		return false;
 	}
+
+	delCookie("auth");
+
 	clearInterval(globalResourceIntervalID);
 	if(globalFirstLoadNextApp)
 		globalFirstLoadNextApp=false;
@@ -630,7 +702,6 @@ function logout(forceLogout)
 	var tmpMatch = document.title.match('^(.*) \\[.*\\]$');
 	if(tmpMatch!=null)
 		document.title = tmpMatch[1];
-
 	$('#LoginPage').fadeTo(2000, 1, function(){
 		if(typeof isCalDAVLoaded!='undefined' && isCalDAVLoaded)
 		{
@@ -1039,6 +1110,7 @@ function globalMain()
 		$('[data-size="login_logo"]').find('img').attr('src', "images/infcloud_logo.svg");
 		$('#LoginPage').find('.footer').text('InfCloud - the open source CalDAV/CardDAV web client');
 	}
+	$('#LoginPage').find('.footer').text('逝者如斯夫，不舍昼夜。');
 	$('#LoginPage').find('.footer').attr('title', globalVersion);
 
 	if(isAvaible('CardDavMATE'))
@@ -1503,6 +1575,7 @@ function checkForLoadedCollections(inputSettings)
 		if(triggerSync)
 			addLoadCalDAVCollection(val, true);
 		globalSettings.loadedcalendarcollections.value = val;
+
 	}
 	else if(globalSettingsSaving=='todo')
 	{
@@ -1525,6 +1598,7 @@ function checkForLoadedCollections(inputSettings)
 		if(triggerSync)
 			addLoadCalDAVCollection(val, false);
 		globalSettings.loadedtodocollections.value = val;
+
 	}
 	else if(globalSettingsSaving=='addressbook')
 	{
@@ -1547,6 +1621,7 @@ function checkForLoadedCollections(inputSettings)
 		if(triggerSync)
 			addLoadCardDAVCollection(val)
 		globalSettings.loadedaddressbookcollections.value = val;
+
 	}
 	if(triggerSync)
 		ifLoadCollections();

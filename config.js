@@ -336,7 +336,7 @@ var globalNetworkCheckSettings={
 //		(location.port ? ':'+location.port: '')+
 //		location.pathname.replace(RegExp('/+[^/]+/*(index\.html)?$'),'')+
 //		'/caldav.php/',
-	href: 'https://xxx.yourhost.xxx/',
+	href: 'https://xx.yourhost.xx/',
 	timeOut: 90000,
 	lockTimeOut: 10000,
 	checkContentType: true,
@@ -418,7 +418,7 @@ var globalSyncResourcesInterval=120000;
 // NOTE: enable this option only if you really know what are you doing!
 // Example:
 //var globalEnableRefresh=false;
-var globalEnableRefresh=true;
+var globalEnableRefresh=false;
 
 
 // globalEnableKbNavigation
@@ -475,6 +475,7 @@ var globalEnableKbNavigation=true;
 // Example:
 var globalInterfaceLanguage='zh_CN';
 
+var globalExtraCal = true;
 
 // globalInterfaceCustomLanguages
 // If defined and not empty then only languages listed here are shown
